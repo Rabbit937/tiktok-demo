@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+    <link href="./styles.css" rel="stylesheet">
+    <title>Tiktok Tools</title>
+</head>
+
+<body>
+
+    <h3 class="title">Tiktok Tools</h3>
+
+    <div class="box">
+        <div class="live-url">
+            <input type="text" id="liveUrl" placeholder="请输入直播间地址">
+        </div>
+
+        <div class="ws-address">
+            <input type="text" id="wsAddress" placeholder="websocket服务器地址">
+        </div>
+
+        <div class="chrome-path-url">
+            <input type="text" id="chromePathUrl" placeholder="chrome默认安装地址" disabled>
+        </div>
+
+        <div class="chrome-user-data">
+            <input type="text" id="chromeUserData" placeholder="chrome默认用户数据目录" disabled>
+        </div>
+
+        <div class="tip">
+            <span>请用管理员权限运行</span>
+        </div>
+
+        <div class="btn">
+            <button id="btn-start">开始</button>
+        </div>
+    </div>
+
+    <script src="../src/renderer.js"></script>
+</body>
+
+</html>

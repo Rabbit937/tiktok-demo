@@ -1,0 +1,28 @@
+{
+  "name": "tiktok-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "nodemon ./src/playwright.js",
+    "format": "pnpm biome format --write ./src",
+    "lint": "pnpm biome lint --apply ./src",
+    "check": "pnpm biome check --apply ./src"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "module": "module",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "playwright": "^1.44.0",
+    "tiktok-live-connector": "^1.1.6"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.7.3",
+    "electron": "^30.0.3",
+    "electron-reloader": "^1.2.3",
+    "nodemon": "^3.1.0"
+  }
+}

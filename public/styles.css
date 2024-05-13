@@ -1,0 +1,36 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /* background-color: black; */
+    /* color: white; */
+}
+
+.title {
+    padding: 0px 10px;
+}
+
+.box {
+    padding: 10px;
+}
+
+.box div {
+    margin-bottom: 10px;
+}
+
+.box div input {
+    width: calc(100% - 14px);
+    padding: 6px;
+}
+
+.box .btn button {
+    width: 100%;
+    padding: 6px 0px;
+}
+
+.box .tip {
+    color: red;
+}
