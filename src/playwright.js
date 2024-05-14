@@ -1,8 +1,8 @@
 const { chromium } = require("playwright");
 const { deserializeWebsocketMessage } = require("./lib/webcastProtobuf.js");
-console.log(deserializeWebsocketMessage)
 const { simplifyObject } = require("./lib/webcastDataConverter.js");
 const setting = require('./setting.json')
+const socketIoClient = require('socket.io-client')
 
 const ControlEvents = {
     CONNECTED: "connected",
@@ -37,6 +37,9 @@ const CustomEvents = {
 };
 
 async function connectLive(link) {
+
+    const io = socketIoClient("http://localhost:3000")
+
     const browser = await chromium.launchPersistentContext(setting.playwright.chromeUserDataUrl, {
         executablePath: setting.playwright.chromePathUrl,
         headless: false,
@@ -63,9 +66,14 @@ async function connectLive(link) {
         ws.on("framereceived", (frame) => {
             deserializeWebsocketMessage(frame.payload).then((res, error) => {
                 if (res.webcastResponse) {
-                    console.log(res.webcastResponse.messages)
+                    // biome-ignore lint/complexity/noForEach: <explanation>
+                    res.webcastResponse.messages.filter((x) => x.decodedData)
+                        .forEach((message) => {
+                            const simplifiedObj = simplifyObject(message.decodedData);
+                            io.emit('chat message', simplifiedObj);
+                        })
                 }
-            });
+            })
         });
     });
 }

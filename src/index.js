@@ -18,8 +18,6 @@ function createWindow() {
 	})
 
 	ipcMain.on('set-link', (event, link) => {
-
-		console.log(link)
 		connectLive(link)
 	})
 

@@ -5,7 +5,8 @@
   "main": "./src/index.js",
   "scripts": {
     "start": "electron .",
-    "dev": "nodemon ./src/playwright.js",
+    "playwright": "nodemon ./src/playwright.js",
+    "dev": "nodemon ./server/app.js",
     "build": "electron-builder --win",
     "format": "pnpm biome format --write ./src",
     "lint": "pnpm biome lint --apply ./src",
@@ -17,7 +18,10 @@
   "module": "module",
   "dependencies": {
     "axios": "^1.6.8",
+    "express": "^4.19.2",
     "playwright": "^1.44.0",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "tiktok-live-connector": "^1.1.6"
   },
   "devDependencies": {
@@ -28,8 +32,10 @@
     "nodemon": "^3.1.0"
   },
   "build": {
+    "productName": "tiktok tools",
     "asar": "true",
     "win": {
+      "icon": "build/icon.ico",
       "target": "nsis"
     },
     "nsis": {
