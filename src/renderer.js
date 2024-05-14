@@ -5,6 +5,15 @@ const chromePathUrl = document.getElementById("chromePathUrl")
 const chromeUserData = document.getElementById("chromeUserData")
 const startBtn = document.getElementById('btn-start')
 
+const wsServer = 'ws://43.132.234.89:3528';
+
+
+window.addEventListener('DOMContentLoaded', () => {
+    wsAddress.value = wsServer;
+    wsAddress.disabled = true;
+})
+
+
 startBtn.addEventListener('click', () => {
     const link = liveUrl.value
 
