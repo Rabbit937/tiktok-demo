@@ -6,12 +6,12 @@ const chromeUserData = document.getElementById("chromeUserData")
 const startBtn = document.getElementById('btn-start')
 
 startBtn.addEventListener('click', () => {
-    const liveUrlValue = liveUrl.value
+    const link = liveUrl.value
 
-    if (liveUrlValue === '') {
+    if (link === "") {
         alert("请输入直播间地址")
     } else {
-        window.electronAPI.setLink(title)
+        window.electronAPI.setlink(link)
     }
 
 })

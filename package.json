@@ -6,6 +6,7 @@
   "scripts": {
     "start": "electron .",
     "dev": "nodemon ./src/playwright.js",
+    "build": "electron-builder --win",
     "format": "pnpm biome format --write ./src",
     "lint": "pnpm biome lint --apply ./src",
     "check": "pnpm biome check --apply ./src"
@@ -22,7 +23,18 @@
   "devDependencies": {
     "@biomejs/biome": "1.7.3",
     "electron": "^30.0.3",
+    "electron-builder": "^24.13.3",
     "electron-reloader": "^1.2.3",
     "nodemon": "^3.1.0"
+  },
+  "build": {
+    "asar": "true",
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": "false",
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }

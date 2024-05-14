@@ -1,12 +1,11 @@
 const { app, BrowserWindow, ipcMain } = require('electron/main')
 const path = require("node:path")
-const setting = require('./setting.json')
-
-try {
-	require('electron-reloader')(module);
-} catch {
-	console.log('hot reload error')
-}
+const { connectLive } = require('./playwright')
+// try {
+// 	require('electron-reloader')(module);
+// } catch {
+// 	console.log('hot reload error')
+// }
 
 
 function createWindow() {
@@ -18,14 +17,18 @@ function createWindow() {
 		}
 	})
 
-	ipcMain.on('set-start', (event, link) => {
+	ipcMain.on('set-link', (event, link) => {
+
 		console.log(link)
+		connectLive(link)
 	})
 
 
 	mainWindow.loadFile('./public/index.html')
 	mainWindow.setMenuBarVisibility(false)
 	mainWindow.setAutoHideMenuBar(true)
+
+	mainWindow.webContents.openDevTools();
 
 }
 

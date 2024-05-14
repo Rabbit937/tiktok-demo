@@ -1,5 +1,5 @@
 const { contextBridge, ipcRenderer } = require('electron/renderer')
 
 contextBridge.exposeInMainWorld('electronAPI', {
-    setLink: (link) => ipcRenderer.send('set-start', link)
+    setlink: (link) => ipcRenderer.send('set-link', link)
 })

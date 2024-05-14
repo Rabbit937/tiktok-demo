@@ -1,9 +1,8 @@
 const { chromium } = require("playwright");
-const { deserializeWebsocketMessage } = require("./lib/webcastProtobuf");
-const { simplifyObject } = require("./lib/webcastDataConverter");
-import setting from './setting.json'
-
-const livePath = "https://www.tiktok.com/@hanbao11200/live";
+const { deserializeWebsocketMessage } = require("./lib/webcastProtobuf.js");
+console.log(deserializeWebsocketMessage)
+const { simplifyObject } = require("./lib/webcastDataConverter.js");
+const setting = require('./setting.json')
 
 const ControlEvents = {
     CONNECTED: "connected",
@@ -37,7 +36,7 @@ const CustomEvents = {
     SHARE: "share",
 };
 
-async function connectLive() {
+async function connectLive(link) {
     const browser = await chromium.launchPersistentContext(setting.playwright.chromeUserDataUrl, {
         executablePath: setting.playwright.chromePathUrl,
         headless: false,
@@ -49,7 +48,7 @@ async function connectLive() {
 
     const page = await browser.newPage();
 
-    page.goto(livePath);
+    page.goto(link);
 
     page.on("request", (request) => {
         if (request.url().includes("webcast/im/fetch/")) {
@@ -71,4 +70,7 @@ async function connectLive() {
     });
 }
 
-connectLive();
+
+module.exports = {
+    connectLive
+}
