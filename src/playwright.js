@@ -40,9 +40,7 @@ const CustomEvents = {
 
 async function connectLive(link) {
 
-    // const io = socketIoClient("ws://43.132.234.89:9502")
     const webSocket = new WebSocket(wsServer);
-
 
     const browser = await chromium.launchPersistentContext(setting.playwright.chromeUserDataUrl, {
         executablePath: setting.playwright.chromePathUrl,
@@ -60,7 +58,7 @@ async function connectLive(link) {
     page.on("request", (request) => {
         if (request.url().includes("webcast/im/fetch/")) {
             const roomId = request.url().split("room_id=")[1].split("&")[0];
-            console.log(roomId)
+            webSocket.send(JSON.stringify({ type: 'roomId', roomId, link }));
         }
     });
 
@@ -79,58 +77,58 @@ async function connectLive(link) {
                             const simplifiedObj = simplifyObject(message.decodedData);
                             switch (message.type) {
                                 case 'WebcastRoomUserSeqMessage':
-                                    webSocket.send({ type: MessageEvents.ROOMUSER, data: simplifiedObj })
+                                    webSocket.send(JSON.stringify({ type: MessageEvents.ROOMUSER, data: simplifiedObj }))
                                     break;
                                 case 'WebcastChatMessage':
-                                    webSocket.send({ type: MessageEvents.CHAT, data: simplifiedObj })
+                                    webSocket.send(JSON.stringify({ type: MessageEvents.CHAT, data: simplifiedObj }))
                                     break;
                                 case 'WebcastMemberMessage':
-                                    webSocket.send({ type: MessageEvents.MEMBER, data: simplifiedObj })
+                                    webSocket.send(JSON.stringify({ type: MessageEvents.MEMBER, data: simplifiedObj }))
                                     break;
                                 case 'WebcastGiftMessage':
                                     // Add extended gift info if option enabled
-                                    webSocket.send({ type: MessageEvents.GIFT, data: simplifiedObj })
+                                    webSocket.send(JSON.stringify({ type: MessageEvents.GIFT, data: simplifiedObj }))
                                     break;
                                 case 'WebcastSocialMessage':
-                                    webSocket.send({ type: MessageEvents.SOCIAL, data: simplifiedObj })
+                                    webSocket.send(JSON.stringify({ type: MessageEvents.SOCIAL, data: simplifiedObj }))
 
                                     if (simplifiedObj.displayType?.includes('follow')) {
-                                        webSocket.send({ type: MessageEvents.FOLLOW, data: simplifiedObj })
+                                        webSocket.send(JSON.stringify({ type: MessageEvents.FOLLOW, data: simplifiedObj }))
                                     }
                                     if (simplifiedObj.displayType?.includes('share')) {
-                                        webSocket.send({ type: MessageEvents.SHARE, data: simplifiedObj })
+                                        webSocket.send(JSON.stringify({ type: MessageEvents.SHARE, data: simplifiedObj }))
                                     }
                                     break;
                                 case 'WebcastLikeMessage':
-                                    webSocket.send({ type: MessageEvents.LIKE, data: simplifiedObj })
+                                    webSocket.send(JSON.stringify({ type: MessageEvents.LIKE, data: simplifiedObj }))
                                     break;
                                 case 'WebcastQuestionNewMessage':
-                                    webSocket.send({ type: MessageEvents.QUESTIONNEW, data: simplifiedObj })
+                                    webSocket.send(JSON.stringify({ type: MessageEvents.QUESTIONNEW, data: simplifiedObj }))
                                     break;
                                 case 'WebcastLinkMicBattle':
-                                    webSocket.send({ type: MessageEvents.LINKMICBATTLE, data: simplifiedObj })
+                                    webSocket.send(JSON.stringify({ type: MessageEvents.LINKMICBATTLE, data: simplifiedObj }))
 
                                     break;
                                 case 'WebcastLinkMicArmies':
-                                    webSocket.send({ type: MessageEvents.LINKMICARMIES, data: simplifiedObj })
+                                    webSocket.send(JSON.stringify({ type: MessageEvents.LINKMICARMIES, data: simplifiedObj }))
 
                                     break;
                                 case 'WebcastLiveIntroMessage':
-                                    webSocket.send({ type: MessageEvents.LIVEINTRO, data: simplifiedObj })
+                                    webSocket.send(JSON.stringify({ type: MessageEvents.LIVEINTRO, data: simplifiedObj }))
                                     break;
                                 case 'WebcastEmoteChatMessage':
-                                    webSocket.send({ type: MessageEvents.EMOTE, data: simplifiedObj })
+                                    webSocket.send(JSON.stringify({ type: MessageEvents.EMOTE, data: simplifiedObj }))
                                     break;
                                 case 'WebcastEnvelopeMessage':
-                                    webSocket.send({ type: MessageEvents.ENVELOPE, data: simplifiedObj })
+                                    webSocket.send(JSON.stringify({ type: MessageEvents.ENVELOPE, data: simplifiedObj }))
                                     break;
                                 case 'WebcastSubNotifyMessage':
-                                    webSocket.send({ type: MessageEvents.SUBSCRIBE, data: simplifiedObj })
+                                    webSocket.send(JSON.stringify({ type: MessageEvents.SUBSCRIBE, data: simplifiedObj }))
                                     break;
                             }
 
                             // 发送消息到服务器
-                            webSocket.send('Hello, WebSocket server!');
+                            // webSocket.send('Hello, WebSocket server!');
 
                         })
                 }
@@ -146,7 +144,7 @@ async function connectLive(link) {
 
     // 接收服务器发送的消息
     webSocket.on('message', function incoming(data) {
-        console.log('Received message from server: %s', data);
+        // console.log('Received message from server: %s', data);
     });
 
     // 连接关闭时的回调
