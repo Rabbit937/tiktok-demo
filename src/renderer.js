@@ -10,6 +10,13 @@ const wsServer = "ws://43.132.234.89:3528";
 window.addEventListener("DOMContentLoaded", () => {
 	wsAddress.value = wsServer;
 	wsAddress.disabled = true;
+
+	const link = localStorage.getItem("liveUrl")
+
+	if (link) {
+		liveUrl.value = link;
+	}
+
 });
 
 startBtn.addEventListener("click", () => {
@@ -18,6 +25,7 @@ startBtn.addEventListener("click", () => {
 	if (link === "") {
 		alert("请输入直播间地址");
 	} else {
+		localStorage.setItem("liveUrl", link)
 		window.electronAPI.setlink(link);
 	}
 });
