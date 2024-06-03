@@ -78,6 +78,7 @@ async function connectLive(link) {
 							const simplifiedObj = simplifyObject(message.decodedData);
 							switch (message.type) {
 								case "WebcastRoomUserSeqMessage":
+									console.log("MessageEvents.ROOMUSER-------------->", simplifiedObj)
 									webSocket.send(
 										JSON.stringify({
 											type: MessageEvents.ROOMUSER,
@@ -94,6 +95,7 @@ async function connectLive(link) {
 									);
 									break;
 								case "WebcastMemberMessage":
+									console.log("MessageEvents.MEMBER-------------->", simplifiedObj)
 									webSocket.send(
 										JSON.stringify({
 											type: MessageEvents.MEMBER,
