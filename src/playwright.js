@@ -76,6 +76,7 @@ async function connectLive(link) {
 						.filter((x) => x.decodedData)
 						.forEach((message) => {
 							const simplifiedObj = simplifyObject(message.decodedData);
+							console.log(simplifiedObj)
 							switch (message.type) {
 								case "WebcastRoomUserSeqMessage":
 									console.log("MessageEvents.ROOMUSER-------------->", simplifiedObj)
